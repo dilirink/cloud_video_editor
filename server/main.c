@@ -6,7 +6,7 @@ int main(int argc, char *argv[]) {
     struct sockaddr_storage their_addr;
     socklen_t sin_size;
 
-    if (cfg_reader()==-1)
+    if(cfg_reader() == -1)
         printf(RED"eror cfg_reader\n"RESET); 
 
     printf(CYN"\n\n\nServer: Web Server in C start!\r\n\n\n"RESET);
