@@ -15,6 +15,6 @@ CTEST(cfgRD, path) {
     ASSERT_STR("milka/", path_index);
 }
 
-int main(int argc, const char *argv[]) {
+int main(int argc, const char *argv[]){
     return ctest_main(argc, argv);
 }
