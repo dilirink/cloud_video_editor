@@ -4,3 +4,5 @@ script: make
 branches:
   only:
   - server_branch
+  - master
+  - union

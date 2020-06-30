@@ -1,5 +1,5 @@
 GCC = gcc -g -c
-OBJ = server/build/main.o server/build/functions.o
+OBJ = server/build/main.o server/build/functions.o server/build/ffmpeg_module.o
 OBJ_TEST = server/build/test.o server/build/functions.o
 
 .PHONY: clean
@@ -11,6 +11,9 @@ server/build/main.o: server/main.c
 
 server/build/functions.o: server/functions.c
 	$(GCC) server/functions.c -o server/build/functions.o
+
+server/build/ffmpeg_module.o: server/ffmpeg_module.c
+	$(GCC) server/ffmpeg_module.c -o server/build/ffmpeg_module.o
 
 server/build/test.o: server/test/test.c
 	$(GCC) -I server -c server/test/test.c -o server/build/test.o
