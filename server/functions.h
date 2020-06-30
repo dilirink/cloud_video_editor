@@ -38,7 +38,6 @@ typedef struct {
 } extn;
 
 void handle_error(char *);
-//void init_extn();
 int cfg_reader();
 char *file_open_and_read(char *);
 void *get_in_addr(struct sockaddr *);

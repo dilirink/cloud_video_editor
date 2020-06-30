@@ -5,37 +5,7 @@ void handle_error(char *mess) {
     exit(EXIT_FAILURE);
 }
 
-/*void init_extn() {
-    strcpy(extensions[0].ext, ".gif");
-    strcpy(extensions[0].mediatype, "Content-Type: image/gif\r\n\r\n");
-    extensions[0].number = 1;
-
-    strcpy(extensions[0].ext, ".gif");
-    strcpy(extensions[0].mediatype, "Content-Type: image/gif\r\n\r\n");
-    extensions[0].number = 1;
-
-   {".txt", "Content-Type: text/plain\r\n\r\n",2},
-   {".jpg", "Content-Type: image/jpg\r\n\r\n" ,3},
-   {".jpeg","Content-Type: image/jpeg\r\n\r\n",4},
-   {".png", "Content-Type: image/png\r\n\r\n" ,5},
-   {".ico", "Content-Type: image/ico\r\n\r\n" ,6},
-   {".zip", "Content-Type: image/zip\r\n\r\n" ,7},
-   {".gz",  "Content-Type: image/gz\r\n\r\n"  ,8},
-   {".tar", "Content-Type: image/tar\r\n\r\n" ,9},
-   {".htm", "Content-Type: text/html\r\n\r\n" ,10},
-   {".html","Content-Type: text/html\r\n\r\n" ,11},
-   {"GET / HTTP/1.1","Content-Type: text/html\r\n\r\n",12},
-   {".php","Content-Type: text/html\r\n\r\n" ,13},
-   {".pdf","Content-Type: application/pdf\r\n\r\n",14},
-   {".zip","Content-Type: application/octet-stream\r\n\r\n",15},
-   {".rar","Content-Type: application/octet-stream\r\n\r\n",16},
-   {".css","Content-Type: text/css\r\n\r\n"},
-   {".js","Content-type: application/javascript\r\n\r\n"},
-   {".mp4", "Content-Type: video/mp4\r\n\r\n" ,1},
-   {0,0}
-}*/
-
-int cfg_reader() { //тут без бутылки ноги сломаешь, но под чай тоже можно понять, читая это через почти месяц написания я почти понял))
+int cfg_reader() {
     char port[256]; int flag_port = 0;
     char path[256]; int flag_path = 0;
     char line[256];
@@ -91,7 +61,7 @@ int cfg_reader() { //тут без бутылки ноги сломаешь, н�
             cfg_reader();
             return -1;
         }  
-        fp = fopen("server/config.txt", "a+t");
+        fp = fopen("config.txt", "a+t");
         fputs(standart, fp);
         fclose(fp);
         
@@ -112,7 +82,7 @@ void *get_in_addr(struct sockaddr *sa) {
 
 int http_request_type(char *recv_message) {
     int i = 0;
-    int stranno = 1; /// крч если не гет или пост то мы вообще хз что это)
+    int stranno = 1;
     int ret = 0;
     char massage[255] = {0};
     sscanf(&recv_message[i], "%s", massage);
@@ -125,7 +95,7 @@ int http_request_type(char *recv_message) {
         ret = 2;
         stranno = 0;
     }
-    if(stranno == 1)    ret=3;
+    if(stranno == 1) ret = 3;
     return ret;
 }
 
@@ -186,7 +156,7 @@ int get_searcher(char *s, int fd_new, extn *extensions) { //открываем �
 
             printf("buffer size= %ld", strlen(buffer));
             int size = strlen(buffer);
-            while(1) {  /// чистим хвосты у файлов,там какие то кракозабры приклеивались, читали лишнее и приходилось вычищать. 
+            while(1) {  /// чистим хвосты у файлов 
                 char *istr = strstr(s, buffer);
 
                 //Вывод результата поиска на консоль
@@ -219,7 +189,7 @@ int get_searcher(char *s, int fd_new, extn *extensions) { //открываем �
                 printf(BLU"file |%s|  size  send any file %d\n"RESET, buffer, size_file_open_and_read);
                 read_file_buffer = file_open_and_read(buffer2);
 
-                if(strstr(read_file_buffer,"EROR204")!=NULL) { //обрабатываем момент что файла нету в дериктории   
+                if(strstr(read_file_buffer,"EROR204")!=NULL) { //обрабатываем ситуацию, когда файла нет в директории   
                     printf(RED"file EROR sen 204 No Content\n"RESET);
                     if(send(fd_new, eror, strlen(eror), 0) == -1)
                         perror("EROR in send in get_searcher");
