@@ -6,13 +6,13 @@
 CTEST(cfgRD, port) {
     if(cfg_reader() == -1)
         printf("error cfg_read\n");
-    ASSERT_STR("3491", PORT);
+    ASSERT_STR("3500", PORT);
 }
 
 CTEST(cfgRD, path) {
     if(cfg_reader() == -1)
         printf("error cfg_read\n");
-    ASSERT_STR("milka/", path_index);
+    ASSERT_STR("./", path_index);
 }
 
 CTEST(httpReqType, POST) {
