@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) { //для передачи или порта �
          
     int bytes_recvd = 0, breaks;
     char key[50], filename[50], *razdel;
-    int file_size = 0;
+    long file_size = 0;
     int key_my = 0,otvet_nomer = 0;
 
     char *ach, *file, *len, len_buff[20];
@@ -166,13 +166,35 @@ int main(int argc, char *argv[]) { //для передачи или порта �
                             for(int l = len - razdel + 16, lol = 0; razdel[l] != '\0'; l++, lol++)
                             len_buff[lol] = razdel[l];
                             file_size = atoi(len_buff);
-                            printf("size file=%d\n", file_size);
+                            printf("size file=%ld\n", file_size);
                         }
                         razdel = strtok(NULL, "\n");
                     }   
                     if(send(new_fd, otvet, strlen(otvet), 0) == -1)
                         perror("EROR in send in get_searcher");
                     int bytes_recvd = recv(new_fd, request, request_buffer_size - 1, 0);
+
+                    ///////////// AFTER SOME MANIPULATION..... ///////////////////////
+
+                    char *videodata = (char *)malloc(file_size);
+                    if(recv(new_fd, videodata, file_size, 0) == -1)
+                        handle_error("recv video");
+
+                    char *outputFile = (char *)malloc(strlen(filename + 3));
+                    strcpy(outputFile, "OUT");
+                    strcat(outputFile, filename);
+                    FILE *output_video = fopen(filename, "w+b");
+                    if(fwrite(videodata, 1, file_size, output_video) == -1)
+                        handle_error("fwrite video");
+
+                    fclose(output_video);
+                    char *new_video = ffmpeg(filename, outputFile, 1);
+                    if(send(new_fd, new_video, strlen(new_video), 0) == -1)
+                        handle_error("send video");
+
+                    free(videodata);
+                    free(outputFile);
+                    free(new_video);
                 }
                 close(new_fd);
                 exit(0); 

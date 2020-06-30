@@ -14,6 +14,7 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <time.h>
+#include <sys/stat.h>
 
 #define RED   "\x1B[31m"
 #define GRN   "\x1B[32m"
@@ -43,5 +44,6 @@ char *file_open_and_read(char *);
 void *get_in_addr(struct sockaddr *);
 int http_request_type(char *); 
 int get_searcher(char *, int, extn *);
+char *ffmpeg(char *, char *, int);
 
 #endif
