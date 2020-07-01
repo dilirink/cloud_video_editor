@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>download</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/index.js" charset="utf-8"></script>
+ </head>
+ <body>
+<div>
+    <p>Имя файла на выходе</p>
+    <input type="text" size="32" id="input"/>
+
+    <p>Параметры:</p>
+     <input type="radio" name="param" value="1">Вырезать mp3 <br/>
+     <input type="radio" name="param" value="2">Разобрать на скриншоты
+</div>
+<div>
+  <!--form method="post" enctype="multipart/form-data"-->
+   <div>
+     <label for="file">Выберите файл</label>
+     <input type="file" id="file" name="file" accept=".mp4">
+   </div>
+   <div>
+     <button id="btn">Отправить</button>
+   </div>
+  <!/form-->
+</div>
+
+</body>
+</html>
